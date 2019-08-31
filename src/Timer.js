@@ -7,14 +7,30 @@ class Timer extends Component {
     color: '#'+Math.floor(Math.random()*16777215).toString(16)
   }
 
+  //clock functions
+  clockTick = () => {
+    this.setState(prevState => ({
+      time: prevState.time+1
+    }))
+  }
+
+  stopClock = () => {
+    console.log("Unmounted")
+    clearInterval(this.interval)
+  }
+
   // add your code here
+//set interval to the scope of this class
+  componentDidMount() {
+    console.log("mounted")
+    this.interval = setInterval(() => this.clockTick(), 1000)
+  }
 
-
-
-
-
-
-
+  componentWillUnmount() {
+    // console.log("Unmounted")
+    this.stopClock()
+  }
+  
   render() {
 
     const { time, color, className } = this.state
@@ -28,17 +44,6 @@ class Timer extends Component {
 
       </section>
     );
-  }
-
-  //clock functions
-  clockTick = () => {
-    this.setState(prevState => ({
-      time: prevState.time+1
-    }))
-  }
-
-  stopClock = () => {
-    clearInterval(this.interval)
   }
 
   // for the 'x' button,
